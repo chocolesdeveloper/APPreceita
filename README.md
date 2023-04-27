@@ -57,6 +57,4 @@ Abra a aplicação em um emulador ou no seu próprio dispositivo utilizando o ap
 
 - [Layout Mobile](<https://www.figma.com/file/OmSQAbbTN8TUX0aQS9N7cJ/App-Receita-F%C3%A1cil-(Copy)?node-id=2603%3A164&t=NhJivtKZA24Q7s5X-1>)
 
-## 📝 License
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para obter mais detalhes.
