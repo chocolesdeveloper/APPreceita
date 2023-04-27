@@ -1,0 +1,73 @@
+import { useState, useEffect } from "react"
+
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from "react-native"
+
+import { api } from "../../services/api"
+
+import { Ionicons } from "@expo/vector-icons"
+import { styles } from "./styles"
+import { Logo } from "../../components/logo"
+import { FoodList } from "../../components/foodlist"
+
+import { useNavigation } from "@react-navigation/native"
+
+export function Home() {
+  const [inputValue, setInputValue] = useState("")
+  const [foods, setFoods] = useState([])
+
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    async function fetchApi() {
+      const response = await api.get("foods")
+      setFoods(response.data)
+    }
+
+    fetchApi()
+  }, [])
+
+  function handleSearch() {
+    if (!inputValue) return
+
+    let input = inputValue
+
+    setInputValue("")
+    navigation.navigate("Search", { name: input })
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Logo />
+
+      <Text style={styles.title}>Encontre a receita</Text>
+      <Text style={styles.title}>que combina com você</Text>
+
+      <View style={styles.form}>
+        <TextInput
+          placeholder="Digite o nome da receita"
+          style={styles.input}
+          value={inputValue}
+          onChangeText={(value) => setInputValue(value)}
+        />
+        <TouchableOpacity onPress={handleSearch}>
+          <Ionicons name="search" size={28} color="#46BD6A" />
+        </TouchableOpacity>
+      </View>
+
+      <FlatList
+        data={foods}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => <FoodList data={item} />}
+        contentContainerStyle={{ paddingBottom: 10 }}
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaView>
+  )
+}
